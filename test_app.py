@@ -29,3 +29,6 @@ class FlaskTest(unittest.TestCase):
     def test_get_document_at_time(self, time_created="14:00:00", title="document_one"):
         resp = requests.get(f"http://127.0.0.1:5000/documents/{title}/{time_created}")
         self.assertEqual(resp.status_code, 200)
+
+
+unittest.main()
