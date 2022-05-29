@@ -97,3 +97,28 @@ def get_document_at_time(title, time_created):
             return jsonify(document), 200
         else:
             return "bad request", 400
+
+
+# returns the lastest version of a document
+@app.route("/documents/<string:title>/latest", methods=["GET"])
+def get_latest_document(title):
+    available_revisions = []
+    for document in document_list:
+        if document["title"] == title:
+            available_revisions.append(document)
+    
+    if len(available_revisions) > 1:
+        available_revisions.sort(key=lambda doc:doc["version"])
+        return jsonify(available_revisions[-1]), 200
+    elif len(available_revisions) == 0:
+        return "no name with title found", 400
+    elif len(available_revisions) == 1:
+        return jsonify(available_revisions), 200
+
+
+
+    
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
