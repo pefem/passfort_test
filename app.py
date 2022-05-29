@@ -86,3 +86,14 @@ def get_document_revisions(title):
         
         elif len(available_revisions) == 0:
             return "unable to create item", 400
+    
+
+# returns a document as per the provided timestamp
+## still a number of cases that can be handled here like if the wrong timestamp is entered
+@app.route("/documents/<string:title>/<string:time_created>", methods=["GET"])
+def get_document_at_time(title, time_created):
+    for document in document_list:
+        if document["title"] == title and document["time"] == time_created:
+            return jsonify(document), 200
+        else:
+            return "bad request", 400
